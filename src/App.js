@@ -9,6 +9,7 @@ const App = () => {
   const URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
   const [word, setWord] = useState("");
+  const [searchMeaningTerm, setSearchMeaningTerm] = useState("")
   const [meaning, setMeaning] = useState([]);
 
 
@@ -35,9 +36,11 @@ const App = () => {
 
   }
 
+  // my solution is to create and function and then set the setnameofword(word), that should be a better option, we should call this search term
   useEffect(() => {
     getWord(word)
-  }, [meaning])
+    console.log(typeof meaning, "HEREEEEEEEEEEE");
+  }, [word])
 
 
   const handleWord = (e) => {
@@ -61,9 +64,9 @@ const App = () => {
 
         {/* https://react-icons.github.io/react-icons/icons?name=fa */}
         <div className="input-group">
-          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setWord(e.target.value)}  />
+          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setWord(e.target.value)} value={word} name="searchMeaningTerm" />
           {/* (e) => setWord(e.target.value) */}
-          <button type="button" onSubmit={handleWord} className="btn btn-outline-primary">
+          <button type="submit" onSubmit={handleWord} className="btn btn-outline-primary">
             <FaSearch />
           </button>
         </div>
