@@ -8,21 +8,45 @@ const App = () => {
 
   const URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
-  const [word, setWord] = useState("a")
+  const [word, setWord] = useState("");
+  const [meaning, setMeaning] = useState([]);
 
 
   const getWord = async (word) => {
-    console.log({ curentURL: `${URL}${word}` });
-    const response = await fetch(`${URL}${word}`);
-    const data = await response.json();
-    console.log(data);
-    return data
+
+    try {
+      console.log('Loading...');
+      const response = await fetch(`${URL}${word}`);
+      console.log(response);
+      const data = await response.json();
+      // data.map( d =>{
+      //   const { meanings, phonetics, word } = d;
+      //   return word
+      // })
+      console.log(data);
+      setMeaning(data)
+      return meaning;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+
+
 
   }
 
   useEffect(() => {
     getWord(word)
-  }, [word])
+  }, [meaning])
+
+
+  const handleWord = (e) => {
+    console.log(e);
+
+    // console.log(word);
+  }
+
+
 
   return (
     <div className="App">
@@ -37,14 +61,38 @@ const App = () => {
 
         {/* https://react-icons.github.io/react-icons/icons?name=fa */}
         <div className="input-group">
-          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setWord(e.target.value)} />
-          <button type="button" className="btn btn-outline-primary">
+          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setWord(e.target.value)}  />
+          {/* (e) => setWord(e.target.value) */}
+          <button type="button" onSubmit={handleWord} className="btn btn-outline-primary">
             <FaSearch />
           </button>
         </div>
 
+
         <h1>{word}</h1>
 
+        <div>
+
+          {meaning && meaning.map(mean => {
+            const { meanings, phonetics, word } = mean;
+
+            return (
+              <>
+                {phonetics.map(phonetic => {
+                  const { text, audio } = phonetic
+                  return (
+                    <>
+                      <h4> {text} </h4>
+                      <p> {audio}</p>
+                    </>
+                  )
+                })}
+
+              </>
+            )
+          })}
+
+        </div>
 
 
 
