@@ -1,32 +1,52 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaPlay } from 'react-icons/fa';
 
 
 const App = () => {
 
   const URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
-  const [word, setWord] = useState("");
+  const [word, setWord] = useState("example");
   const [searchMeaningTerm, setSearchMeaningTerm] = useState("")
-  const [meaning, setMeaning] = useState([]);
+  const [meanings, setMeanings] = useState('');
+  const [errorMsg, setErrorMsg] = useState('')
 
 
   const getWord = async (word) => {
+    // console.log('Loading...');
+    // const response = await  fetch(`${URL}${word}`);
+    // const data = response.json()
+    // setMeanings(data)
+    // return meanings;
+
 
     try {
       console.log('Loading...');
+      setErrorMsg('')
+      console.log('Error Message was cleaned...');
+      setMeanings('')
+      console.log('Meaning  was cleaned...');
+
       const response = await fetch(`${URL}${word}`);
       console.log(response);
-      const data = await response.json();
-      // data.map( d =>{
-      //   const { meanings, phonetics, word } = d;
-      //   return word
-      // })
-      console.log(data);
-      setMeaning(data)
-      return meaning;
+      if (response.ok) {
+        const data = await response.json();
+
+        // data.map( d =>{
+        //   const { meanings, phonetics, word } = d;
+        //   return word
+        // })
+
+        setMeanings(data)
+
+        return meanings;
+      } else {
+        setErrorMsg(`Sorry Nothing was found under ${word}`)
+        throw new Error('Api Error: ' + response.status);
+      }
+
     } catch (error) {
       console.error(error);
       throw error;
@@ -39,12 +59,15 @@ const App = () => {
   // my solution is to create and function and then set the setnameofword(word), that should be a better option, we should call this search term
   useEffect(() => {
     getWord(word)
-    console.log(typeof meaning, "HEREEEEEEEEEEE");
+    console.log(typeof meanings, "HEREEEEEEEEEEE");
   }, [word])
 
 
-  const handleWord = (e) => {
-    console.log(e);
+  const handleWord = () => {
+
+    setWord(searchMeaningTerm)
+    console.log({ word });
+    console.log("youve cliciked");
 
     // console.log(word);
   }
@@ -64,9 +87,9 @@ const App = () => {
 
         {/* https://react-icons.github.io/react-icons/icons?name=fa */}
         <div className="input-group">
-          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setWord(e.target.value)} value={word} name="searchMeaningTerm" />
-          {/* (e) => setWord(e.target.value) */}
-          <button type="submit" onSubmit={handleWord} className="btn btn-outline-primary">
+          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setSearchMeaningTerm(e.target.value)} value={searchMeaningTerm} name="searchMeaningTerm" />
+
+          <button type="submit" onClick={handleWord} className="btn btn-outline-primary">
             <FaSearch />
           </button>
         </div>
@@ -76,25 +99,71 @@ const App = () => {
 
         <div>
 
-          {meaning && meaning.map(mean => {
-            const { meanings, phonetics, word } = mean;
+          {errorMsg && <p>{errorMsg}</p>}
+
+          {meanings && meanings.map(meaning => {
+            console.log("FINEEEEEEEEE");
+            console.log(meaning);
+
+
+            const { meanings, phonetics, word } = meaning;
+            // console.log(meanings, "meanin");
+            // console.log(phonetics);
 
             return (
               <>
+                {/* <h1>{word}</h1> */}
+                {/* phonetics such as how the make sound comes here */}
                 {phonetics.map(phonetic => {
                   const { text, audio } = phonetic
                   return (
                     <>
                       <h4> {text} </h4>
-                      <p> {audio}</p>
+                      {audio && <p> <FaPlay /></p>}
                     </>
                   )
+                })}
+                {/* definitions comes here */}
+                {meanings.map(meaning => {
+                  console.log(meaning, "ADENTROOOOOOOOOO");
+
+                  const { definitions, partOfSpeech, synonyms, antonyms } = meaning
+                  // console.log(antonyms);
+                  // console.log({ definitions });
+                  console.log(synonyms, "synonyms0000000");
+                  console.log(antonyms, "antonyms");
+
+
+                  return <>
+                    <h3>{partOfSpeech}</h3>
+                    {definitions.map(definition => {
+                      // console.log(definition, "DEFFFFFFFFF");
+                      //  const {definition} = definition
+                      return <>
+                        <p>{definition.definition}</p>
+                      </>
+                    })}
+                    {/* antonyms */}
+                    {antonyms && antonyms.map(antonym => {
+                      console.log({ antonym });
+                      return <>
+                        <h4 className='antonym'>{antonym}</h4>
+                        <span className='antonym' key={antonym}>{antonym + ", "}</span>
+                      </>
+                    })}
+                    {/* synonyms */}
+                    {synonyms && synonyms.map(synonym => {
+                      // console.log({synonym});
+                    })}
+                  </>
+
+
+
                 })}
 
               </>
             )
           })}
-
         </div>
 
 
