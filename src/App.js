@@ -63,8 +63,8 @@ const App = () => {
   }, [word])
 
 
-  const handleWord = () => {
-
+  const handleWord = (e) => {
+    e.preventDefault();
     setWord(searchMeaningTerm)
     console.log({ word });
     console.log("youve cliciked");
@@ -86,13 +86,14 @@ const App = () => {
         {/* https://mdbootstrap.com/docs/standard/forms/search/ */}
 
         {/* https://react-icons.github.io/react-icons/icons?name=fa */}
-        <div className="input-group">
+
+        <form className="input-group">
           <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setSearchMeaningTerm(e.target.value)} value={searchMeaningTerm} name="searchMeaningTerm" />
 
           <button type="submit" onClick={handleWord} className="btn btn-outline-primary">
             <FaSearch />
           </button>
-        </div>
+        </form>
 
 
         <h1>{word}</h1>
@@ -118,22 +119,23 @@ const App = () => {
                   const { text, audio } = phonetic
                   return (
                     <>
-                      <h4> {text} </h4>
-                      {audio && <p> <FaPlay /></p>}
+                      <h4> {text}  </h4>
+                      {audio && <p> <FaPlay /> {audio}</p>}
                     </>
                   )
                 })}
+
                 {/* definitions comes here */}
                 {meanings.map(meaning => {
-                  console.log(meaning, "ADENTROOOOOOOOOO");
+                  // console.log(meaning, "ADENTROOOOOOOOOO");
 
                   const { definitions, partOfSpeech, synonyms, antonyms } = meaning
                   // console.log(antonyms);
                   // console.log({ definitions });
-                  console.log(synonyms, "synonyms0000000");
-                  console.log(antonyms, "antonyms");
+                  // console.log(synonyms, "synonyms0000000");
+                  // console.log(antonyms, "antonyms");
 
-
+                  console.log({ meaning });
                   return <>
                     <h3>{partOfSpeech}</h3>
                     {definitions.map(definition => {
@@ -145,15 +147,19 @@ const App = () => {
                     })}
                     {/* antonyms */}
                     {antonyms && antonyms.map(antonym => {
-                      console.log({ antonym });
+                      // console.log({ antonym });
                       return <>
-                        <h4 className='antonym'>{antonym}</h4>
+                        <h4 className='antonym'>Antonym</h4>
                         <span className='antonym' key={antonym}>{antonym + ", "}</span>
                       </>
                     })}
                     {/* synonyms */}
                     {synonyms && synonyms.map(synonym => {
                       // console.log({synonym});
+                      return <>
+                        <h4 className='synonym'>Synonym</h4>
+                        <span className='synonym' key={synonym}>{synonym + ", "}</span>
+                      </>
                     })}
                   </>
 
