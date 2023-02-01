@@ -30,7 +30,7 @@ const App = () => {
       console.log('Meaning  was cleaned...');
 
       const response = await fetch(`${URL}${word}`);
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         const data = await response.json();
 
@@ -59,15 +59,15 @@ const App = () => {
   // my solution is to create and function and then set the setnameofword(word), that should be a better option, we should call this search term
   useEffect(() => {
     getWord(word)
-    console.log(typeof meanings, "HEREEEEEEEEEEE");
+    // console.log(typeof meanings, "HEREEEEEEEEEEE");
   }, [word])
 
 
   const handleWord = (e) => {
     e.preventDefault();
     setWord(searchMeaningTerm)
-    console.log({ word });
-    console.log("youve cliciked");
+    // console.log({ word });
+    // console.log("youve cliciked");
 
     // console.log(word);
   }
@@ -103,8 +103,8 @@ const App = () => {
           {errorMsg && <p>{errorMsg}</p>}
 
           {meanings && meanings.map(meaning => {
-            console.log("FINEEEEEEEEE");
-            console.log(meaning);
+            // console.log("FINEEEEEEEEE");
+            // console.log(meaning);
 
 
             const { meanings, phonetics, word } = meaning;
@@ -135,7 +135,7 @@ const App = () => {
                   // console.log(synonyms, "synonyms0000000");
                   // console.log(antonyms, "antonyms");
 
-                  console.log({ meaning });
+                  // console.log({ meaning });
                   return <>
                     <h3>{partOfSpeech}</h3>
                     {definitions.map(definition => {
@@ -146,21 +146,40 @@ const App = () => {
                       </>
                     })}
                     {/* antonyms */}
-                    {antonyms && antonyms.map(antonym => {
-                      // console.log({ antonym });
-                      return <>
-                        <h4 className='antonym'>Antonym</h4>
+                    <h4 className='antonym'>Antonym MMG</h4>
+                    {antonyms && antonyms.length > 0 && antonyms.map(antonym => {
+                      console.log({ antonym });
+                      
+                        return <>
                         <span className='antonym' key={antonym}>{antonym + ", "}</span>
                       </>
-                    })}
+                      
+                      
+                    }) ||  <div> Nothing FOOOOOOOOOOOOund</div>}
+
+
+                    {/* <h4>antonyms</h4>
+                    {antonyms && antonyms.length > 0 ? <>
+                      {antonyms.map(antonym => {
+                        <p>{antonym}</p>
+                      })}
+                    </> : <>
+                      <p>No antonym was found </p>
+                    </>
+                    } */}
+
                     {/* synonyms */}
-                    {synonyms && synonyms.map(synonym => {
-                      // console.log({synonym});
-                      return <>
-                        <h4 className='synonym'>Synonym</h4>
-                        <span className='synonym' key={synonym}>{synonym + ", "}</span>
-                      </>
-                    })}
+                    <h4>synonyms</h4>
+                    {synonyms && synonyms.length > 0 ? <>
+
+                      {synonyms.map(synonym => {
+                        <p>{synonym}</p>
+                      })}
+                    </> : <>
+                      <p>No synonym was found</p>
+                    </>
+                    }
+
                   </>
 
 
