@@ -114,9 +114,9 @@ const App = () => {
 
             return (
               <>
-               
-                <a href={sourceUrls}>
-                  <div class="source-link">Click Here to View Source</div>
+
+                <a href={sourceUrls} target="_blank">
+                  <div className="source-link">Click Here to View Source</div>
                 </a>
 
                 {/* <h1>{word}</h1> */}
@@ -125,8 +125,11 @@ const App = () => {
                   const { text, audio } = phonetic
                   return (
                     <>
-                      <h4> {text}  </h4>
-                      {audio && <p> <FaPlay /> {audio}</p>}
+
+                      {audio && <>
+                        <h4> {text}  </h4>
+                        <p> <FaPlay /> {audio}</p>
+                      </>}
                     </>
                   )
                 })}
