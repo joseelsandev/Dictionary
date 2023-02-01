@@ -107,12 +107,18 @@ const App = () => {
             // console.log(meaning);
 
 
-            const { meanings, phonetics, word } = meaning;
+            const { meanings, phonetics, word, sourceUrls } = meaning;
             // console.log(meanings, "meanin");
             // console.log(phonetics);
+            console.log({ meaning });
 
             return (
               <>
+               
+                <a href={sourceUrls}>
+                  <div class="source-link">Click Here to View Source</div>
+                </a>
+
                 {/* <h1>{word}</h1> */}
                 {/* phonetics such as how the make sound comes here */}
                 {phonetics.map(phonetic => {
@@ -134,6 +140,10 @@ const App = () => {
                   // console.log({ definitions });
                   // console.log(synonyms, "synonyms0000000");
                   // console.log(antonyms, "antonyms");
+                  // console.log({ synonyms });
+                  // console.log({ antonyms });
+                  // console.log({ meaning });
+
 
                   // console.log({ meaning });
                   return <>
@@ -146,37 +156,32 @@ const App = () => {
                       </>
                     })}
                     {/* antonyms */}
-                    <h4 className='antonym'>Antonym MMG</h4>
+                    <h4 className='antonym-title'>Antonym </h4>
                     {antonyms && antonyms.length > 0 && antonyms.map(antonym => {
-                      console.log({ antonym });
-                      
-                        return <>
-                        <span className='antonym' key={antonym}>{antonym + ", "}</span>
+                      // console.log({ antonym });
+
+                      return <>
+
+                        <span className='antonym-item' key={antonym}>{antonym + ", "}</span>
                       </>
-                      
-                      
-                    }) ||  <div> Nothing FOOOOOOOOOOOOund</div>}
 
 
-                    {/* <h4>antonyms</h4>
-                    {antonyms && antonyms.length > 0 ? <>
-                      {antonyms.map(antonym => {
-                        <p>{antonym}</p>
-                      })}
-                    </> : <>
-                      <p>No antonym was found </p>
-                    </>
-                    } */}
+                    }) || <div> No Antonym was found</div>}
+
+
 
                     {/* synonyms */}
-                    <h4>synonyms</h4>
+                    <h4 className='synonyms-title' > Synonyms</h4>
                     {synonyms && synonyms.length > 0 ? <>
-
+                      {/* console.log({synonyms}); */}
                       {synonyms.map(synonym => {
-                        <p>{synonym}</p>
+                        return <>
+                          <span className='synonym-item' key={synonym}>{synonym + ", "}</span>
+                        </>
+
                       })}
                     </> : <>
-                      <p>No synonym was found</p>
+                      <p>No Synonym was found</p>
                     </>
                     }
 
