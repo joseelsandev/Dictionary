@@ -12,6 +12,8 @@ const App = () => {
   const [searchMeaningTerm, setSearchMeaningTerm] = useState("")
   const [meanings, setMeanings] = useState('');
   const [errorMsg, setErrorMsg] = useState('')
+  const [isPlaying, setIsPlaying] = useState(false)
+
 
 
   const getWord = async (word) => {
@@ -72,8 +74,29 @@ const App = () => {
     // console.log(word);
   }
 
+  // audio is reproduting multiple times
+  const handlePlay = (play) => {
 
+    const sound = new Audio(play)
+    // sound.play()
+    console.log("AUDIO WORK");
 
+    
+    if (!isPlaying) {
+      
+      setIsPlaying(true)
+      sound.play()
+   
+      sound.addEventListener("ended", ()=>{
+        // sound.currentTime = 0
+        setIsPlaying(false)
+
+      })
+    }
+
+    
+
+  }
   return (
     <div className="App">
       <header className="header">
@@ -128,7 +151,7 @@ const App = () => {
 
                       {audio && <>
                         <h4> {text}  </h4>
-                        <p> <FaPlay /> {audio}</p>
+                        <p onClick={() => handlePlay(audio)}> <FaPlay /> {audio}</p>
                       </>}
                     </>
                   )
