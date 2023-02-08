@@ -145,7 +145,7 @@ const App = () => {
 
         <div>
           <h1> {FirstLetterToUpperCase(word)} </h1>
-          {errorMsg && <p>{errorMsg}</p>}
+          {errorMsg && <p className='errorMsg'>{errorMsg}</p>}
 
           {meanings && meanings.map(meaning => {
             // console.log("FINEEEEEEEEE");
