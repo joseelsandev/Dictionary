@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { FaSearch, FaPlay } from 'react-icons/fa';
+import { FaSearch, FaPlay, FaHandPointUp } from 'react-icons/fa';
+// import FirstLetterToUpperCase from './FirstLetterToUpperCase.js';
 
 
 const App = () => {
@@ -67,7 +68,13 @@ const App = () => {
 
   const handleWord = (e) => {
     e.preventDefault();
-    setWord(searchMeaningTerm)
+    // setWord("")
+    // setErrorMsg("")
+    if (searchMeaningTerm) {
+      setWord(searchMeaningTerm)
+    }
+
+    setErrorMsg("Nothing to Search")
     // console.log({ word });
     // console.log("youve cliciked");
 
@@ -81,28 +88,32 @@ const App = () => {
     // sound.play()
     console.log("AUDIO WORK");
 
-    
+
     if (!isPlaying) {
-      
+
       setIsPlaying(true)
       sound.play()
-   
-      sound.addEventListener("ended", ()=>{
+
+      sound.addEventListener("ended", () => {
         // sound.currentTime = 0
         setIsPlaying(false)
 
       })
     }
 
-    
+
 
   }
+  const FirstLetterToUpperCase = (word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  }
+
   return (
     <div className="App">
       <header className="header">
 
       </header>
-      <div className='container'>
+      <div className='dictionary-container'>
         {/* <input type='text' /> */}
 
         {/* SEARCH BAR  */}
@@ -110,16 +121,22 @@ const App = () => {
 
         {/* https://react-icons.github.io/react-icons/icons?name=fa */}
 
-        <form className="input-group">
-          <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setSearchMeaningTerm(e.target.value)} value={searchMeaningTerm} name="searchMeaningTerm" />
+        <div className='container-form'>
+          <form className="input-group">
+            <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(e) => setSearchMeaningTerm(e.target.value)} value={searchMeaningTerm} name="searchMeaningTerm" />
 
-          <button type="submit" onClick={handleWord} className="btn btn-outline-primary">
-            <FaSearch />
-          </button>
-        </form>
+            <button type="submit" onClick={handleWord} className="btn btn-outline-primary btn-submit">
+              <FaSearch />
+            </button>
+          </form>
+        </div>
 
 
-        <h1>{word}</h1>
+
+        {/*  this code makes first letter upper case */}
+        {/* https://flexiple.com/javascript/javascript-capitalize-first-letter/ */}
+        {/* <h1> <FirstLetterToUpperCase word={word} /> </h1> */}
+        <h1> {FirstLetterToUpperCase(word)} </h1>
 
         <div>
 
@@ -137,86 +154,90 @@ const App = () => {
 
             return (
               <>
+                <div className='underline'>
+                  <a href={sourceUrls} target="_blank" key={sourceUrls} className="source-file">
+                    <div className="source-link" >Click Here to View Source</div>
+                  </a>
 
-                <a href={sourceUrls} target="_blank">
-                  <div className="source-link">Click Here to View Source</div>
-                </a>
+                  {/* <h1>{word}</h1> */}
+                  {/* phonetics such as how the make sound comes here */}
+                  {phonetics.map(phonetic => {
+                    const { text, audio } = phonetic
+                    return (
+                      <>
 
-                {/* <h1>{word}</h1> */}
-                {/* phonetics such as how the make sound comes here */}
-                {phonetics.map(phonetic => {
-                  const { text, audio } = phonetic
-                  return (
-                    <>
-
-                      {audio && <>
-                        <h4> {text}  </h4>
-                        <p onClick={() => handlePlay(audio)}> <FaPlay /> {audio}</p>
-                      </>}
-                    </>
-                  )
-                })}
-
-                {/* definitions comes here */}
-                {meanings.map(meaning => {
-                  // console.log(meaning, "ADENTROOOOOOOOOO");
-
-                  const { definitions, partOfSpeech, synonyms, antonyms } = meaning
-                  // console.log(antonyms);
-                  // console.log({ definitions });
-                  // console.log(synonyms, "synonyms0000000");
-                  // console.log(antonyms, "antonyms");
-                  // console.log({ synonyms });
-                  // console.log({ antonyms });
-                  // console.log({ meaning });
+                        {audio && <>
+                          <div className='audio'>
+                            <h4 key={text} className="inline"> {text }   </h4>
+                            <FaPlay onClick={() => handlePlay(audio)} key={audio} className="play" />
+                          </div>
 
 
-                  // console.log({ meaning });
-                  return <>
-                    <h3>{partOfSpeech}</h3>
-                    {definitions.map(definition => {
-                      // console.log(definition, "DEFFFFFFFFF");
-                      //  const {definition} = definition
-                      return <>
-                        <p>{definition.definition}</p>
+                        </>}
                       </>
-                    })}
-                    {/* antonyms */}
-                    <h4 className='antonym-title'>Antonym </h4>
-                    {antonyms && antonyms.length > 0 && antonyms.map(antonym => {
-                      // console.log({ antonym });
+                    )
+                  })}
 
-                      return <>
+                  {/* definitions comes here */}
+                  {meanings.map(meaning => {
+                    // console.log(meaning, "ADENTROOOOOOOOOO");
 
-                        <span className='antonym-item' key={antonym}>{antonym + ", "}</span>
-                      </>
+                    const { definitions, partOfSpeech, synonyms, antonyms } = meaning
+                    // console.log(antonyms);
+                    // console.log({ definitions });
+                    // console.log(synonyms, "synonyms0000000");
+                    // console.log(antonyms, "antonyms");
+                    // console.log({ synonyms });
+                    // console.log({ antonyms });
+                    // console.log({ meaning });
 
 
-                    }) || <div> No Antonym was found</div>}
-
-
-
-                    {/* synonyms */}
-                    <h4 className='synonyms-title' > Synonyms</h4>
-                    {synonyms && synonyms.length > 0 ? <>
-                      {/* console.log({synonyms}); */}
-                      {synonyms.map(synonym => {
+                    // console.log({ meaning });
+                    return <>
+                      <h3> {FirstLetterToUpperCase(partOfSpeech)}</h3>
+                      {definitions.map(definition => {
+                        // console.log(definition, "DEFFFFFFFFF");
+                        //  const {definition} = definition
                         return <>
-                          <span className='synonym-item' key={synonym}>{synonym + ", "}</span>
+                          <p key={definition.definition}>{definition.definition}</p>
+                        </>
+                      })}
+                      {/* antonyms */}
+                      <h4 className='antonym-title'>Antonym </h4>
+                      {antonyms && antonyms.length > 0 && antonyms.map(antonym => {
+                        // console.log({ antonym });
+
+                        return <>
+
+                          <span className='antonym-item' key={antonym}>{antonym + ", "}</span>
                         </>
 
-                      })}
-                    </> : <>
-                      <p>No Synonym was found</p>
+
+                      }) || <p>No Antonym was found</p>}
+
+
+
+                      {/* synonyms */}
+                      <h4 className='synonyms-title' > Synonyms</h4>
+                      {synonyms && synonyms.length > 0 ? <>
+                        {/* console.log({synonyms}); */}
+                        {synonyms.map(synonym => {
+                          return <>
+                            <span className='synonym-item' key={synonym}>{synonym + ", "}</span>
+                          </>
+
+                        })}
+                      </> : <>
+                        <p>No Synonym was found</p>
+                      </>
+                      }
+
                     </>
-                    }
-
-                  </>
 
 
 
-                })}
-
+                  })}
+                </div>
               </>
             )
           })}
