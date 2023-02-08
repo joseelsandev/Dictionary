@@ -37,10 +37,73 @@ html{
 h1{
  font-size: 3rem;
  
+ 
+}
+h3{
+  font-size: 2rem;
 }
 
 .underline{
   border-top: solid 4px var(--yellow);
+  margin-top: 10px;
+}
+
+
+p{
+  margin: 10px 0;
+}
+
+
+
+.source-link{
+
+background-color: var(--yellow);
+max-width: 300px;
+padding: 10px;
+color: var(--darkerbrown);
+font-weight: bold;
+border-radius: 5px;
+text-align: center;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+transition: all 0.2s ease-in-out;
+margin: 15px auto;
+font-size: 1.5rem;
+}
+
+
+.source-link:focus{
+transform: translateY(-2px);
+box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.container-form{
+display: flex;
+margin: 20px 0;
+
+
+}
+.input-group{
+margin: 0 auto;
+align-items: center;
+}
+
+.form-control{
+padding: 5px;
+max-width: 400px;
+
+}
+
+.form-control:focus{
+outline: none;
+
+ }
+
+
+.btn-submit{
+margin: 0 5px;
+padding: 5px;
+font-size: 1rem;
+
+
 }
 
 
@@ -52,69 +115,19 @@ h1{
     
   }
 
-  p{
-    margin: 10px 0;
-  }
-
-
-
- .source-link{
   
-background-color: var(--yellow);
-max-width: 300px;
-padding: 10px;
-color: var(--darkerbrown);
-font-weight: bold;
-border-radius: 5px;
-text-align: center;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-in-out;
-  margin: 15px auto;
-  font-size: 1.5rem;
- }
-
-
- .source-link:focus{
-  transform: translateY(-2px);
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
- }
- .container-form{
-  display: flex;
-  margin: 20px 0;
- 
-  
- }
- .input-group{
-  margin: 0 auto;
-  align-items: center;
- }
-
- .form-control{
-padding: 5px;
-max-width: 400px;
-
- }
-
- .form-control:focus{
-  outline: none;
-  
-   }
-
- 
- .btn-submit{
-  margin: 0 5px;
-  padding: 5px;
-  font-size: 1rem;
- 
-  
- }
-
 
 }
 
 
 
 @media only screen and (min-width: 581px) {
+  .dictionary-container{
+    min-width: 581;
+    margin: 20px;
+   
+    
+  }
   
 }
 

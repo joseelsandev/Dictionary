@@ -9,7 +9,7 @@ const App = () => {
 
   const URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
-  const [word, setWord] = useState("example");
+  const [word, setWord] = useState("");
   const [searchMeaningTerm, setSearchMeaningTerm] = useState("")
   const [meanings, setMeanings] = useState('');
   const [errorMsg, setErrorMsg] = useState('')
@@ -61,7 +61,11 @@ const App = () => {
 
   // my solution is to create and function and then set the setnameofword(word), that should be a better option, we should call this search term
   useEffect(() => {
-    getWord(word)
+    if (word) {
+      getWord(word)
+    }
+
+    
     // console.log(typeof meanings, "HEREEEEEEEEEEE");
   }, [word])
 
@@ -104,6 +108,7 @@ const App = () => {
 
 
   }
+
   const FirstLetterToUpperCase = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1)
   }
@@ -136,10 +141,10 @@ const App = () => {
         {/*  this code makes first letter upper case */}
         {/* https://flexiple.com/javascript/javascript-capitalize-first-letter/ */}
         {/* <h1> <FirstLetterToUpperCase word={word} /> </h1> */}
-        <h1> {FirstLetterToUpperCase(word)} </h1>
+
 
         <div>
-
+          <h1> {FirstLetterToUpperCase(word)} </h1>
           {errorMsg && <p>{errorMsg}</p>}
 
           {meanings && meanings.map(meaning => {
@@ -168,7 +173,7 @@ const App = () => {
 
                         {audio && <>
                           <div className='audio'>
-                            <h4 key={text} className="inline"> {text }   </h4>
+                            <h3 key={text} className="inline"> {text}   </h3>
                             <FaPlay onClick={() => handlePlay(audio)} key={audio} className="play" />
                           </div>
 
@@ -203,7 +208,7 @@ const App = () => {
                         </>
                       })}
                       {/* antonyms */}
-                      <h4 className='antonym-title'>Antonym </h4>
+                      <h3 className='antonym-title'>Antonym </h3>
                       {antonyms && antonyms.length > 0 && antonyms.map(antonym => {
                         // console.log({ antonym });
 
@@ -218,7 +223,7 @@ const App = () => {
 
 
                       {/* synonyms */}
-                      <h4 className='synonyms-title' > Synonyms</h4>
+                      <h3 className='synonyms-title' > Synonyms</h3>
                       {synonyms && synonyms.length > 0 ? <>
                         {/* console.log({synonyms}); */}
                         {synonyms.map(synonym => {
