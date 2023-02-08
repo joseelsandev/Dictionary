@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+# Dictionary
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This code is a React-based dictionary application that allows users to search for the definition of a word.
 
-## Available Scripts
+The code starts by importing the necessary dependencies including the `React` library, `FaSearch`, `FaPlay`, and `FaHandPointUp` icons `from react-icons/fa`, and the logo and CSS for the application.
 
-In the project directory, you can run:
+The main functional component `App` uses `useState` and `useEffect` hooks to manage the state of the application. The state variables include:
 
-### `npm start`
+`word`: the word the user wants to search for
+`searchMeaningTerm`: the term entered by the user in the search bar
+`meanings`: the definition of the word
+`errorMsg`: an error message to be displayed in case the word is not found
+`isPlaying`: a boolean that keeps track of whether the pronunciation audio is playing or not
+The `getWord` function uses fetch to get the definition of the word from the API https://api.dictionaryapi.dev/api/v2/entries/en/. The function handles errors and displays an error message if the word is not found.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The `handleWord` function is called when the user submits the search form. It sets the `word` state to the value of `searchMeaningTerm` and triggers a search.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The `handlePlay` function is used to play the pronunciation audio of the word. It uses the `Audio` API and sets the state of `isPlaying` to keep track of whether the audio is playing or not.
 
-### `npm test`
+The `FirstLetterToUpperCase` function capitalizes the first letter of the word.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The returned JSX of the `App` component displays the search form, the word in upper case, and its definition.
